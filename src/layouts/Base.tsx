@@ -2,7 +2,7 @@ import Footer from "../components/footer/Footer";
 import Header from "../components/header/Header";
 
 type Props = {
-  children: React.ReactElement[];
+  children: React.ReactElement | React.ReactElement[];
 };
 
 const BaseLayout = ({ children }: Props) => {
