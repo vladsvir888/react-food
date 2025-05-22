@@ -1,17 +1,20 @@
 import { useState } from "react";
 
+const MIN_VALUE = 0;
+const MAX_VALUE = 5;
+
 const Counter = () => {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(MIN_VALUE);
 
   const handleIncrement = () => {
-    if (count === 5) {
+    if (count === MAX_VALUE) {
       return;
     }
 
     setCount(count + 1);
   };
   const handleDecrement = () => {
-    if (count === 0) {
+    if (count === MIN_VALUE) {
       return;
     }
 
@@ -20,8 +23,8 @@ const Counter = () => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = Number(event.target.value);
 
-    if (value > 5 || isNaN(value)) {
-      setCount(0);
+    if (value > MAX_VALUE || isNaN(value)) {
+      setCount(MIN_VALUE);
     } else {
       setCount(value);
     }

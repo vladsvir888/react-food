@@ -10,7 +10,7 @@ import { TabsContext } from "./components/navigation/tabs/Context";
 import Restaurant from "./components/restaurant/Restaurant";
 
 const App = () => {
-  const [activeValue, setActiveValue] = useState(restaurants[0].name);
+  const [activeValue, setActiveValue] = useState(restaurants[0].id);
 
   return (
     <>
@@ -20,14 +20,14 @@ const App = () => {
           <Tabs>
             <TabList>
               {restaurants.map((restaurant) => (
-                <Tab key={restaurant.id} value={restaurant.name}>
+                <Tab key={restaurant.id} value={restaurant.id}>
                   {restaurant.name}
                 </Tab>
               ))}
             </TabList>
             <TabPanels>
               {restaurants.map((restaurant) => (
-                <TabPanel key={restaurant.id} value={restaurant.name}>
+                <TabPanel key={restaurant.id} value={restaurant.id}>
                   <Restaurant restaurant={restaurant} />
                 </TabPanel>
               ))}
