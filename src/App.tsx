@@ -3,11 +3,9 @@ import HomePage from "./pages/HomePage";
 
 const App = () => {
   return (
-    <>
-      <BaseLayout>
-        <HomePage />
-      </BaseLayout>
-    </>
+    <BaseLayout>
+      <HomePage />
+    </BaseLayout>
   );
 };
 
