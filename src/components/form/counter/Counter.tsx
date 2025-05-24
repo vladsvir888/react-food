@@ -1,11 +1,14 @@
-import { useState } from "react";
+import InputText from "../inputtext/InputText";
 
-const MIN_VALUE = 0;
+type Props = {
+  count: number;
+  setCount: React.Dispatch<React.SetStateAction<number>>;
+};
+
+export const MIN_VALUE = 0;
 const MAX_VALUE = 5;
 
-const Counter = () => {
-  const [count, setCount] = useState(MIN_VALUE);
-
+const Counter = ({ count, setCount }: Props) => {
   const handleIncrement = () => {
     if (count === MAX_VALUE) {
       return;
@@ -46,8 +49,7 @@ const Counter = () => {
           <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" />
         </svg>
       </button>
-      <input
-        type="text"
+      <InputText
         value={count}
         onChange={handleChange}
         placeholder="Enter a count"
