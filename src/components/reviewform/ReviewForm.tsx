@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-import InputText from "../form/inputtext/InputText";
+import Input from "../form/input/Input";
 import Rating from "../form/rating/Rating";
 
 const SET_NAME_ACTION = "setName";
@@ -45,14 +45,14 @@ const ReviewForm = () => {
 
   return (
     <form className="review-form">
-      <InputText
+      <Input
         placeholder="Name"
         value={state.name}
         onChange={(event) =>
           dispatch({ type: SET_NAME_ACTION, value: event.target.value })
         }
       />
-      <InputText
+      <Input
         placeholder="Text"
         value={state.text}
         onChange={(event) =>

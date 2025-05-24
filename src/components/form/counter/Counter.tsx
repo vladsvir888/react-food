@@ -1,4 +1,4 @@
-import InputText from "../inputtext/InputText";
+import Input from "../input/Input";
 
 type Props = {
   count: number;
@@ -49,7 +49,7 @@ const Counter = ({ count, setCount }: Props) => {
           <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" />
         </svg>
       </button>
-      <InputText
+      <Input
         value={count}
         onChange={handleChange}
         placeholder="Enter a count"
