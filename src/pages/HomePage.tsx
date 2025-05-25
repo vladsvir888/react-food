@@ -9,19 +9,23 @@ import { TabsContext } from "../components/navigation/tabs/Context";
 import Restaurant from "../components/restaurant/Restaurant";
 
 const HomePage = () => {
-  const [activeValue, setActiveValue] = useState(restaurants[0].id);
+  const defaultRestaurant = restaurants.find((restaurant) => !!restaurant.name);
+  const [activeValue, setActiveValue] = useState(defaultRestaurant?.id);
 
   return (
     <>
-      <h1>Рестораны:</h1>
+      <h1>Restaurants:</h1>
       <TabsContext.Provider value={{ activeValue, setActiveValue }}>
         <Tabs>
           <TabList>
-            {restaurants.map((restaurant) => (
-              <Tab key={restaurant.id} value={restaurant.id}>
-                {restaurant.name}
-              </Tab>
-            ))}
+            {restaurants.map(
+              (restaurant) =>
+                restaurant.name && (
+                  <Tab key={restaurant.id} value={restaurant.id}>
+                    {restaurant.name}
+                  </Tab>
+                )
+            )}
           </TabList>
           <TabPanels>
             {restaurants.map((restaurant) => (

@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react";
 
 export type TabsContextType = {
-  activeValue: string;
+  activeValue?: string;
   setActiveValue: (value: string) => void;
 };
 

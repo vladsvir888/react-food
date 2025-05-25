@@ -1,5 +1,5 @@
 type Props = {
-  children: React.ReactElement[];
+  children: React.ReactNode;
 };
 
 const TabList = ({ children }: Props) => {
