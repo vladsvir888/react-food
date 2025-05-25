@@ -1,5 +1,5 @@
 import { restaurants } from "../assets/restaurants";
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import Tabs from "../components/navigation/tabs/Tabs";
 import TabList from "../components/navigation/tabs/TabList";
 import Tab from "../components/navigation/tabs/Tab";
@@ -18,13 +18,14 @@ const HomePage = () => {
       <TabsContext.Provider value={{ activeValue, setActiveValue }}>
         <Tabs>
           <TabList>
-            {restaurants.map((restaurant) => (
-              <Fragment key={restaurant.id}>
-                {restaurant.name && (
-                  <Tab value={restaurant.id}>{restaurant.name}</Tab>
-                )}
-              </Fragment>
-            ))}
+            {restaurants.map(
+              (restaurant) =>
+                restaurant.name && (
+                  <Tab key={restaurant.id} value={restaurant.id}>
+                    {restaurant.name}
+                  </Tab>
+                )
+            )}
           </TabList>
           <TabPanels>
             {restaurants.map((restaurant) => (
