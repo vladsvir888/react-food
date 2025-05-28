@@ -10,7 +10,7 @@ const Rating = ({ name, value, onChange }: Props) => {
   return (
     <div className="rating">
       {items.map((item) => (
-        <label key={item} className="rating__item">
+        <label key={item}>
           <input
             type="radio"
             value={item}

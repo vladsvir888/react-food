@@ -41,6 +41,9 @@ const stateReducer = (state: State, action: Actions): State => {
 const useReviewForm = () => {
   const [state, dispatch] = useReducer(stateReducer, initialState);
 
+  const isDisabledButton =
+    JSON.stringify(state) === JSON.stringify(initialState);
+
   const handleNameChange = (value: string) => {
     dispatch({ type: SET_NAME_ACTION, value });
   };
@@ -60,6 +63,7 @@ const useReviewForm = () => {
 
   return {
     state,
+    isDisabledButton,
     handleNameChange,
     handleTextChange,
     handleRatingChange,

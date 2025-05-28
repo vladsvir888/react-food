@@ -1,4 +1,6 @@
+import Button from "../../button/Button";
 import Input from "../input/Input";
+import styles from "./counter.module.css";
 
 type Props = {
   count: number;
@@ -33,41 +35,50 @@ const Counter = ({ count, setCount }: Props) => {
     }
   };
 
+  const decreaseIcon = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 448 512"
+      width={10}
+      height={10}
+    >
+      <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" />
+    </svg>
+  );
+  const increaseIcon = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 448 512"
+      width={10}
+      height={10}
+    >
+      <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z" />
+    </svg>
+  );
+
   return (
-    <div className="counter">
-      <button
-        className="counter__button"
+    <div className={styles.counter}>
+      <Button
+        className={styles.buttonDecrease}
         title="Decrease"
+        icon={decreaseIcon}
+        variant="secondary"
         onClick={handleDecrement}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 448 512"
-          width={10}
-          height={10}
-        >
-          <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" />
-        </svg>
-      </button>
-      <Input
-        value={count}
-        onChange={handleChange}
-        placeholder="Enter a count"
       />
-      <button
-        className="counter__button"
+      <Input
+        classNameWrap={styles.inputWrap}
+        className={styles.input}
+        value={count}
+        placeholder="Enter a count"
+        onChange={handleChange}
+      />
+      <Button
+        className={styles.buttonIncrease}
         title="Increase"
+        icon={increaseIcon}
+        variant="secondary"
         onClick={handleIncrement}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 448 512"
-          width={10}
-          height={10}
-        >
-          <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 144L48 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l144 0 0 144c0 17.7 14.3 32 32 32s32-14.3 32-32l0-144 144 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-144 0 0-144z" />
-        </svg>
-      </button>
+      />
     </div>
   );
 };

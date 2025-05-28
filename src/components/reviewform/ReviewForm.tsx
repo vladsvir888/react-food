@@ -1,10 +1,13 @@
+import Button from "../button/Button";
 import Input from "../form/input/Input";
 import Rating from "../form/rating/Rating";
 import useReviewForm from "./useReviewForm";
+import styles from "./reviewform.module.css";
 
 const ReviewForm = () => {
   const {
     state: { name, text, rating },
+    isDisabledButton,
     handleNameChange,
     handleTextChange,
     handleRatingChange,
@@ -12,7 +15,7 @@ const ReviewForm = () => {
   } = useReviewForm();
 
   return (
-    <form className="review-form">
+    <form className={styles.reviewForm}>
       <Input
         placeholder="Name"
         value={name}
@@ -28,9 +31,9 @@ const ReviewForm = () => {
         value={rating}
         onChange={(event) => handleRatingChange(event.target.value)}
       />
-      <button type="reset" onClick={handleReset}>
+      <Button type="reset" disabled={isDisabledButton} onClick={handleReset}>
         Reset
-      </button>
+      </Button>
     </form>
   );
 };

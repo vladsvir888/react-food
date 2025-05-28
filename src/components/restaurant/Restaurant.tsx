@@ -1,18 +1,21 @@
 import type { RestaurantType } from "../../types";
 import DishCounter from "../dishcounter/DishCounter";
 import ReviewForm from "../reviewform/ReviewForm";
+import styles from "./restaurant.module.css";
+import classNames from "classnames";
 
 type Props = {
   restaurant: RestaurantType;
+  className?: string;
 };
 
-const Restaurant = ({ restaurant }: Props) => {
+const Restaurant = ({ restaurant, className }: Props) => {
   if (!restaurant.name) {
     return null;
   }
 
   return (
-    <section className="restaurant">
+    <section className={classNames(styles.restaurant, className)}>
       <h2>{restaurant.name}</h2>
       <DishCounter />
       {!!restaurant.menu?.length && (

@@ -1,7 +1,7 @@
 import { useTabsContext } from "./Context";
 
 type Props = {
-  children: React.ReactElement;
+  children: React.ReactElement | React.ReactElement[];
   value: string;
 };
 
