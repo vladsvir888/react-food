@@ -35,31 +35,6 @@ const HomePage = () => {
                   restaurant={restaurant}
                   className={styles.homePageRestaurant}
                 />
-                {/* for progressbar */}
-                <Restaurant
-                  restaurant={restaurant}
-                  className={styles.homePageRestaurant}
-                />
-                <Restaurant
-                  restaurant={restaurant}
-                  className={styles.homePageRestaurant}
-                />
-                <Restaurant
-                  restaurant={restaurant}
-                  className={styles.homePageRestaurant}
-                />
-                <Restaurant
-                  restaurant={restaurant}
-                  className={styles.homePageRestaurant}
-                />
-                <Restaurant
-                  restaurant={restaurant}
-                  className={styles.homePageRestaurant}
-                />
-                <Restaurant
-                  restaurant={restaurant}
-                  className={styles.homePageRestaurant}
-                />
               </TabPanel>
             ))}
           </TabPanels>
