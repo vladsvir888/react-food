@@ -1,0 +1,22 @@
+.counter {
+  display: flex;
+  max-width: 200px;
+}
+
+.buttonIncrease {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.buttonDecrease {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.inputWrap {
+  flex: 1 1 auto;
+}
+
+.input {
+  width: 100%;
+}
