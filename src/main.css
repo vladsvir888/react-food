@@ -1,3 +1,31 @@
+html {
+  --page-bg: #fff;
+  --text-color: #09090b;
+  --button-primary-bg: #020617;
+  --button-primary-hover-bg: #1e293b;
+  --button-primary-color: #fff;
+  --button-secondary-bg: #f1f5f9;
+  --button-secondary-hover-bg: #e2e8f0;
+  --button-secondary-color: #475569;
+  --input-border-color: #cbd5e1;
+  --input-bg: #fff;
+  --progressbar-color: #020617;
+}
+
+html[data-theme="dark"] {
+  --page-bg: #09090b;
+  --text-color: #fff;
+  --button-primary-bg: #fff;
+  --button-primary-color: #020617;
+  --button-primary-hover-bg: #ccc;
+  --button-secondary-bg: #27272a;
+  --button-secondary-hover-bg: #3f3f46;
+  --button-secondary-color: #fff;
+  --input-border-color: #52525b;
+  --input-bg: #09090b;
+  --progressbar-color: #fff;
+}
+
 *,
 *::before,
 *::after {
@@ -16,6 +44,8 @@ li {
 
 body {
   font-family: "Inter", sans-serif;
+  background-color: var(--page-bg);
+  color: var(--text-color);
 }
 
 .root {

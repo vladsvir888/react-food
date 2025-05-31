@@ -9,6 +9,7 @@ type Props = {
   icon?: React.ReactElement;
   disabled?: boolean;
   className?: string;
+  size?: "small" | "normal" | "large";
   onClick?: () => void;
 };
 
@@ -22,12 +23,14 @@ const Button = ({
   icon,
   disabled,
   className,
+  size = "normal",
   onClick,
 }: Props) => {
   const classes = cx(
     styles.button,
     {
       [`button_${variant}`]: variant,
+      [`button_${size}`]: size,
     },
     className
   );

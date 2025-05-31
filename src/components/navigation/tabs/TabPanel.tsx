@@ -1,4 +1,4 @@
-import { useTabsContext } from "./Context";
+import { useTabsContext } from "./TabsContext";
 
 type Props = {
   children: React.ReactElement | React.ReactElement[];
