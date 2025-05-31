@@ -4,6 +4,6 @@
   left: 0;
   z-index: 1;
   width: 0%;
-  background-color: #020617;
+  background-color: var(--progressbar-color);
   height: 2px;
 }

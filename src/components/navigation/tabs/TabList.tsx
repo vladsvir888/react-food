@@ -1,4 +1,4 @@
-import styles from "./tablist.module.css";
+import styles from "./styles/tablist.module.css";
 
 type Props = {
   children: React.ReactNode;
