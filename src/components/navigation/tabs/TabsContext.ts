@@ -1,9 +1,5 @@
 import { createContext, useContext } from "react";
-
-export type TabsContextType = {
-  activeValue?: string;
-  setActiveValue: (value: string) => void;
-};
+import type { TabsContextType } from "./types";
 
 export const TabsContext = createContext<TabsContextType | null>(null);
 

@@ -1,6 +1,7 @@
 import type { RestaurantType } from "../../types";
 import DishCounter from "../dishcounter/DishCounter";
 import ReviewForm from "../reviewform/ReviewForm";
+import { useUserContext } from "../user/UserContext";
 import styles from "./restaurant.module.css";
 import classNames from "classnames";
 
@@ -10,6 +11,8 @@ type Props = {
 };
 
 const Restaurant = ({ restaurant, className }: Props) => {
+  const { user } = useUserContext();
+
   if (!restaurant.name) {
     return null;
   }
@@ -17,7 +20,7 @@ const Restaurant = ({ restaurant, className }: Props) => {
   return (
     <section className={classNames(styles.restaurant, className)}>
       <h2>{restaurant.name}</h2>
-      <DishCounter />
+      {user && <DishCounter />}
       {!!restaurant.menu?.length && (
         <>
           <h3>Menu:</h3>
@@ -38,7 +41,7 @@ const Restaurant = ({ restaurant, className }: Props) => {
           </ul>
         </>
       )}
-      <ReviewForm />
+      {user && <ReviewForm />}
     </section>
   );
 };

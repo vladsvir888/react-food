@@ -1,7 +1,7 @@
 import Button from "../../button/Button";
-import { useTabsContext } from "./Context";
+import { useTabsContext } from "./TabsContext";
 import classNames from "classnames";
-import styles from "./tab.module.css";
+import styles from "./styles/tab.module.css";
 
 type Props = {
   value: string;
