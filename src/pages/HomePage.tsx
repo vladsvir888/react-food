@@ -1,11 +1,11 @@
-import TabsProvider from "../components/navigation/tabs/TabsProvider";
+import RestaurantTabs from "../components/restaurant/RestaurantTabs";
 import styles from "./homepage.module.css";
 
 const HomePage = () => {
   return (
     <div className="home-page">
       <h1 className={styles.mainHeading}>Restaurants:</h1>
-      <TabsProvider />
+      <RestaurantTabs />
     </div>
   );
 };
