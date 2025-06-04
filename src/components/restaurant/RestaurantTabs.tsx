@@ -1,17 +1,25 @@
-import { restaurants } from "../../assets/restaurants";
 import Tabs from "../navigation/tabs/Tabs";
 import TabList from "../navigation/tabs/TabList";
-import Tab from "../navigation/tabs/Tab";
 import TabPanels from "../navigation/tabs/TabPanels";
 import TabPanel from "../navigation/tabs/TabPanel";
 import Restaurant from "./Restaurant";
 import styles from "../../pages/homepage.module.css";
 import TabsProvider from "../navigation/tabs/TabsProvider";
+import { useSelector } from "react-redux";
+import {
+  selectRestaurantById,
+  selectRestaurantsIds,
+} from "../../redux/entities/restaurant/slice";
+import type { RootState } from "../../redux/store";
+import RestaurantTab from "./RestaurantTab";
 
 const RestaurantTabs = () => {
-  const defaultRestaurant = restaurants.find((restaurant) => !!restaurant.name);
+  const restaurantIds = useSelector(selectRestaurantsIds);
+  const defaultRestaurant = useSelector((state: RootState) =>
+    selectRestaurantById(state, restaurantIds[0])
+  );
 
-  if (!defaultRestaurant) {
+  if (!defaultRestaurant.name) {
     return null;
   }
 
@@ -19,20 +27,15 @@ const RestaurantTabs = () => {
     <TabsProvider value={defaultRestaurant.id}>
       <Tabs>
         <TabList>
-          {restaurants.map(
-            (restaurant) =>
-              restaurant.name && (
-                <Tab key={restaurant.id} value={restaurant.id}>
-                  {restaurant.name}
-                </Tab>
-              )
-          )}
+          {restaurantIds.map((restaurantId) => (
+            <RestaurantTab key={restaurantId} id={restaurantId} />
+          ))}
         </TabList>
         <TabPanels>
-          {restaurants.map((restaurant) => (
-            <TabPanel key={restaurant.id} value={restaurant.id}>
+          {restaurantIds.map((restaurantId) => (
+            <TabPanel key={restaurantId} value={restaurantId}>
               <Restaurant
-                restaurant={restaurant}
+                id={restaurantId}
                 className={styles.homePageRestaurant}
               />
             </TabPanel>

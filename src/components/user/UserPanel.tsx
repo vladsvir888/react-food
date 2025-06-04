@@ -1,15 +1,14 @@
+import { useSelector } from "react-redux";
 import UserButton from "./UserButton";
-import { useUserContext } from "./UserContext";
 import UsernameDisplay from "./UsernameDisplay";
+import { getUser } from "../../redux/entities/user/slice";
 
 const UserPanel = () => {
-  const { user, login, logout } = useUserContext();
-  const textUserButton = user ? "Выйти" : "Войти";
-  const handleUser = user ? logout : login;
+  const user = useSelector(getUser);
 
   return (
     <>
-      <UserButton text={textUserButton} onClick={handleUser} />
+      <UserButton />
       {user && <UsernameDisplay />}
     </>
   );
