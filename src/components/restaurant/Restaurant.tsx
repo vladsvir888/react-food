@@ -1,21 +1,24 @@
-import type { RestaurantType } from "../../types";
+import { useSelector } from "react-redux";
 import DishCounter from "../dishcounter/DishCounter";
 import ReviewForm from "../reviewform/ReviewForm";
-import { useUserContext } from "../user/UserContext";
 import styles from "./restaurant.module.css";
 import classNames from "classnames";
+import { selectRestaurantById } from "../../redux/entities/restaurant/slice";
+import type { RootState } from "../../redux/store";
+import RestaurantMenuItem from "./RestaurantMenuItem";
+import RestaurantReviewItem from "./RestaurantReviewItem";
+import { getUser } from "../../redux/entities/user/slice";
 
 type Props = {
-  restaurant: RestaurantType;
+  id: string;
   className?: string;
 };
 
-const Restaurant = ({ restaurant, className }: Props) => {
-  const { user } = useUserContext();
-
-  if (!restaurant.name) {
-    return null;
-  }
+const Restaurant = ({ id, className }: Props) => {
+  const user = useSelector(getUser);
+  const restaurant = useSelector((state: RootState) =>
+    selectRestaurantById(state, id)
+  );
 
   return (
     <section className={classNames(styles.restaurant, className)}>
@@ -26,7 +29,7 @@ const Restaurant = ({ restaurant, className }: Props) => {
           <h3>Menu:</h3>
           <ul>
             {restaurant.menu.map((menuItem) => (
-              <li key={menuItem.id}>{menuItem.name}</li>
+              <RestaurantMenuItem key={menuItem} id={menuItem} />
             ))}
           </ul>
         </>
@@ -36,7 +39,7 @@ const Restaurant = ({ restaurant, className }: Props) => {
           <h3>Reviews:</h3>
           <ul>
             {restaurant.reviews.map((review) => (
-              <li key={review.id}>{review.text}</li>
+              <RestaurantReviewItem key={review} id={review} />
             ))}
           </ul>
         </>
