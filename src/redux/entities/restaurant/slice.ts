@@ -4,11 +4,13 @@ import type { NormilizedRestaurantType } from "../../../types";
 
 const initialState = {
   ids: normalizedRestaurants.map(({ id }) => id),
-  entities: normalizedRestaurants.reduce((acc, restaurant) => {
+  entities: normalizedRestaurants.reduce<
+    Record<string, NormilizedRestaurantType>
+  >((acc, restaurant) => {
     acc[restaurant.id] = restaurant;
 
     return acc;
-  }, {} as Record<string, NormilizedRestaurantType>),
+  }, {}),
 };
 
 export const restaurantSlice = createSlice({

@@ -1,16 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { normalizedReviews } from "../../../assets/normalized-mock";
+import type { NormilizedReviewType } from "../../../types";
 
 const initialState = {
-  reviews: normalizedReviews,
+  ids: normalizedReviews.map(({ id }) => id),
+  entities: normalizedReviews.reduce<Record<string, NormilizedReviewType>>(
+    (acc, review) => {
+      acc[review.id] = review;
+
+      return acc;
+    },
+    {}
+  ),
 };
 
 export const reviewSlice = createSlice({
   name: "reviewSlice",
   initialState,
   selectors: {
-    selectReviewById: (state, id) =>
-      state.reviews.find((review) => review.id === id),
+    selectReviewById: (state, id) => state.entities[id],
   },
   reducers: {},
 });
