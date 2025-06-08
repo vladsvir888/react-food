@@ -3,12 +3,21 @@ import { normalizedUsers } from "../../../assets/normalized-mock";
 import type { NormalizedUserType } from "../../../types";
 
 type UserState = {
-  users: NormalizedUserType[];
+  ids: string[];
+  entities: Record<string, NormalizedUserType>;
   user: NormalizedUserType | null;
 };
 
 const initialState: UserState = {
-  users: normalizedUsers,
+  ids: normalizedUsers.map(({ id }) => id),
+  entities: normalizedUsers.reduce<Record<string, NormalizedUserType>>(
+    (acc, user) => {
+      acc[user.id] = user;
+
+      return acc;
+    },
+    {}
+  ),
   user: null,
 };
 
@@ -17,10 +26,12 @@ export const userSlice = createSlice({
   initialState,
   selectors: {
     getUser: (state) => state.user,
+    getUserById: (state, id) => state.entities[id],
   },
   reducers: {
     login: (state) => {
-      state.user = state.users[0];
+      const id = Object.keys(state.entities)[0]; // fake
+      state.user = state.entities[id];
     },
     logout: (state) => {
       state.user = null;
@@ -28,5 +39,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { getUser } = userSlice.selectors;
+export const { getUser, getUserById } = userSlice.selectors;
 export const { login, logout } = userSlice.actions;

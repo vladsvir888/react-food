@@ -7,6 +7,7 @@ html {
   --button-secondary-bg: #f1f5f9;
   --button-secondary-hover-bg: #e2e8f0;
   --button-secondary-color: #475569;
+  --button-link-color: #09090b;
   --input-border-color: #cbd5e1;
   --input-bg: #fff;
   --progressbar-color: #020617;
@@ -21,6 +22,7 @@ html[data-theme="dark"] {
   --button-secondary-bg: #27272a;
   --button-secondary-hover-bg: #3f3f46;
   --button-secondary-color: #fff;
+  --button-link-color: #fff;
   --input-border-color: #52525b;
   --input-bg: #09090b;
   --progressbar-color: #fff;
