@@ -18,7 +18,7 @@ const DishCard = ({ dish }: Props) => {
       <h1>{dish.name}</h1>
       <p>Ingredients: {ingredients}</p>
       <p>{price}$</p>
-      {user && <DishCounter />}
+      {user && <DishCounter dish={dish} />}
     </div>
   );
 };

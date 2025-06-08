@@ -1,22 +1,36 @@
+import { useState } from "react";
 import Button from "../../button/Button";
 import Input from "../input/Input";
 import styles from "./counter.module.css";
 
 type Props = {
-  count: number;
-  setCount: React.Dispatch<React.SetStateAction<number>>;
+  initialValue?: number;
+  onIncrement?: () => void;
+  onDecrement?: () => void;
+  onChange?: (value: number) => void;
 };
 
 export const MIN_VALUE = 0;
 const MAX_VALUE = 5;
 
-const Counter = ({ count, setCount }: Props) => {
+const Counter = ({
+  initialValue,
+  onIncrement,
+  onDecrement,
+  onChange,
+}: Props) => {
+  const [count, setCount] = useState(initialValue || MIN_VALUE);
+
   const handleIncrement = () => {
     if (count === MAX_VALUE) {
       return;
     }
 
     setCount(count + 1);
+
+    if (onIncrement && typeof onIncrement === "function") {
+      onIncrement();
+    }
   };
   const handleDecrement = () => {
     if (count === MIN_VALUE) {
@@ -24,14 +38,20 @@ const Counter = ({ count, setCount }: Props) => {
     }
 
     setCount(count - 1);
+
+    if (onDecrement && typeof onDecrement === "function") {
+      onDecrement();
+    }
   };
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = Number(event.target.value);
+    const targetValue = Number(event.target.value);
+    const value =
+      targetValue > MAX_VALUE || isNaN(targetValue) ? MIN_VALUE : targetValue;
 
-    if (value > MAX_VALUE || isNaN(value)) {
-      setCount(MIN_VALUE);
-    } else {
-      setCount(value);
+    setCount(value);
+
+    if (onChange && typeof onChange === "function") {
+      onChange(value);
     }
   };
 
