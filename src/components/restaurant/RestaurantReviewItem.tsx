@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
 import { selectReviewById } from "../../redux/entities/review/slice";
-import { getUserById } from "../../redux/entities/user/slice";
+import { selectUserById } from "../../redux/entities/user/slice";
 
 type Props = {
   id: string;
@@ -10,7 +10,7 @@ type Props = {
 const RestaurantReviewItem = ({ id }: Props) => {
   const review = useSelector((state: RootState) => selectReviewById(state, id));
   const user = useSelector((state: RootState) =>
-    getUserById(state, review.userId)
+    selectUserById(state, review.userId)
   );
 
   return (

@@ -18,8 +18,8 @@ export const cartSlice = createSlice({
   name: "cartSlice",
   initialState,
   selectors: {
-    getCart: (state) => state.cart,
-    getCartItem: (state, id) => state.cart.find((item) => item.id === id),
+    selectCart: (state) => state.cart,
+    selectCartItem: (state, id) => state.cart.find((item) => item.id === id),
   },
   reducers: {
     addToCart(state, { payload }: PayloadAction<CartItem>) {
@@ -65,5 +65,5 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { getCart, getCartItem } = cartSlice.selectors;
+export const { selectCart, selectCartItem } = cartSlice.selectors;
 export const { addToCart, removeFromCart, updateCartItem } = cartSlice.actions;

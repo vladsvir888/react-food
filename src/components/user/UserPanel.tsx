@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import UserButton from "./UserButton";
 import UsernameDisplay from "./UsernameDisplay";
-import { getUser } from "../../redux/entities/user/slice";
+import { selectUser } from "../../redux/entities/user/slice";
 
 const UserPanel = () => {
-  const user = useSelector(getUser);
+  const user = useSelector(selectUser);
 
   return (
     <>

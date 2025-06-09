@@ -2,8 +2,8 @@ import Counter from "../form/counter/Counter";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addToCart,
-  getCartItem,
   removeFromCart,
+  selectCartItem,
   updateCartItem,
 } from "../../redux/entities/cart/slice";
 import type { NormalizedDishType } from "../../types";
@@ -16,7 +16,7 @@ type Props = {
 const DishCounter = ({ dish }: Props) => {
   const { id, name } = dish;
 
-  const cartItem = useSelector((state: RootState) => getCartItem(state, id));
+  const cartItem = useSelector((state: RootState) => selectCartItem(state, id));
   const initialQuantityCartItem = cartItem?.quantity;
   const dispatch = useDispatch();
   const onIncrement = () => {

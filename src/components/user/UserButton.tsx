@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../button/Button";
-import { getUser, login, logout } from "../../redux/entities/user/slice";
+import { login, logout, selectUser } from "../../redux/entities/user/slice";
 
 const UserButton = () => {
-  const user = useSelector(getUser);
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
   const text = user ? "Выйти" : "Войти";
   const handleClick = user ? logout : login;

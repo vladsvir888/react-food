@@ -3,12 +3,12 @@ import { useParams } from "react-router";
 import type { RootState } from "../../redux/store";
 import { selectRestaurantById } from "../../redux/entities/restaurant/slice";
 import RestaurantReviewItem from "../../components/restaurant/RestaurantReviewItem";
-import { getUser } from "../../redux/entities/user/slice";
+import { selectUser } from "../../redux/entities/user/slice";
 import ReviewForm from "../../components/reviewform/ReviewForm";
 import styles from "./reviewspage.module.css";
 
 const ReviewsPage = () => {
-  const user = useSelector(getUser);
+  const user = useSelector(selectUser);
   const { id } = useParams();
   const restaurant = useSelector((state: RootState) =>
     selectRestaurantById(state, id)

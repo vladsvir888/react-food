@@ -25,8 +25,8 @@ export const userSlice = createSlice({
   name: "userSlice",
   initialState,
   selectors: {
-    getUser: (state) => state.user,
-    getUserById: (state, id) => state.entities[id],
+    selectUser: (state) => state.user,
+    selectUserById: (state, id) => state.entities[id],
   },
   reducers: {
     login: (state) => {
@@ -39,5 +39,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { getUser, getUserById } = userSlice.selectors;
+export const { selectUser, selectUserById } = userSlice.selectors;
 export const { login, logout } = userSlice.actions;

@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import { getCart } from "../../redux/entities/cart/slice";
+import { selectCart } from "../../redux/entities/cart/slice";
 import styles from "./cart.module.css";
 
 const Cart = () => {
-  const cart = useSelector(getCart);
+  const cart = useSelector(selectCart);
 
   return (
     <div className={styles.cart}>
