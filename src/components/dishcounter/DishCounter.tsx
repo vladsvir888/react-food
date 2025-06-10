@@ -17,7 +17,7 @@ const DishCounter = ({ dish }: Props) => {
   const { id, name } = dish;
 
   const cartItem = useSelector((state: RootState) => selectCartItem(state, id));
-  const initialQuantityCartItem = cartItem?.quantity;
+  const initialQuantityCartItem = cartItem?.quantity || 0;
   const dispatch = useDispatch();
   const onIncrement = () => {
     dispatch(addToCart({ id, name }));
