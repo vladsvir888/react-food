@@ -2,12 +2,14 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  column-gap: 5px;
   user-select: none;
   cursor: pointer;
   border-radius: 6px;
   border: none;
   font-family: inherit;
   transition: background-color 0.3s;
+  text-decoration: none;
 }
 
 .button_primary {
@@ -26,6 +28,14 @@
 
 .button_secondary:hover {
   background-color: var(--button-secondary-hover-bg);
+}
+
+.button_link {
+  color: var(--button-link-color);
+}
+
+.button_link:hover {
+  text-decoration: underline;
 }
 
 .button > svg {

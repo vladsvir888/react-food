@@ -7,7 +7,7 @@ import { selectRestaurantById } from "../../redux/entities/restaurant/slice";
 import type { RootState } from "../../redux/store";
 import RestaurantMenuItem from "./RestaurantMenuItem";
 import RestaurantReviewItem from "./RestaurantReviewItem";
-import { getUser } from "../../redux/entities/user/slice";
+import { selectUser } from "../../redux/entities/user/slice";
 
 type Props = {
   id: string;
@@ -15,7 +15,7 @@ type Props = {
 };
 
 const Restaurant = ({ id, className }: Props) => {
-  const user = useSelector(getUser);
+  const user = useSelector(selectUser);
   const restaurant = useSelector((state: RootState) =>
     selectRestaurantById(state, id)
   );

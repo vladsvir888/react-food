@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import { getUser } from "../../redux/entities/user/slice";
+import { selectUser } from "../../redux/entities/user/slice";
 
 const UsernameDisplay = () => {
-  const user = useSelector(getUser);
+  const user = useSelector(selectUser);
 
   return <div className="username">{user?.name}</div>;
 };
