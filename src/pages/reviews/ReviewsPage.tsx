@@ -1,29 +1,21 @@
 import { useSelector } from "react-redux";
-import { useParams } from "react-router";
-import type { RootState } from "../../redux/store";
-import { selectRestaurantById } from "../../redux/entities/restaurant/slice";
-import RestaurantReviewItem from "../../components/restaurant/RestaurantReviewItem";
 import { selectUser } from "../../redux/entities/user/slice";
-import ReviewForm from "../../components/reviewform/ReviewForm";
+import { useOutletContext } from "react-router";
 import styles from "./reviewspage.module.css";
+import type { NormalizedReviewType } from "../../types";
+import RestaurantReviewItem from "../../components/restaurant/RestaurantReviewItem";
+import ReviewForm from "../../components/reviewform/ReviewForm";
 
 const ReviewsPage = () => {
   const user = useSelector(selectUser);
-  const { id } = useParams();
-  const restaurant = useSelector((state: RootState) =>
-    selectRestaurantById(state, id)
-  );
-
-  if (!restaurant.reviews.length) {
-    return <h2>No reviews</h2>;
-  }
+  const { reviews } = useOutletContext<{ reviews: NormalizedReviewType[] }>();
 
   return (
     <div className={styles.reviewsPage}>
       <h2>Reviews:</h2>
       <ul>
-        {restaurant.reviews.map((review) => (
-          <RestaurantReviewItem key={review} id={review} />
+        {reviews.map((review) => (
+          <RestaurantReviewItem key={review.id} id={review.id} />
         ))}
       </ul>
       {user && <ReviewForm />}
