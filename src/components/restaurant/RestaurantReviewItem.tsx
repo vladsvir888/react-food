@@ -15,7 +15,7 @@ const RestaurantReviewItem = ({ id }: Props) => {
 
   return (
     <li>
-      <p>{user.name}</p>
+      <p>{user?.name}</p>
       <p>{review.text}</p>
       <p>Rating: {review.rating}</p>
     </li>
