@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router";
 import type { AppDispatch, RootState } from "../../redux/store";
 import {
   selectDishById,
@@ -11,9 +10,10 @@ import { getDish } from "../../redux/entities/dish/get-dish";
 import { RequestStatus } from "../../redux/types";
 import Spinner from "../../components/spinner/Spinner";
 import Error from "../../components/error/Error";
+import useParamId from "../../hooks/useParamId";
 
 const DishPage = () => {
-  const id = useParams().id as string;
+  const id = useParamId();
   const dispatch = useDispatch<AppDispatch>();
   const dish = useSelector((state: RootState) => selectDishById(state, id));
   const requestStatus = useSelector(selectRequestStatus);

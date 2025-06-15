@@ -26,11 +26,7 @@ const getRestaurants = createAsyncThunk<
       const state = getState();
       const { isFullListLoaded } = state.restaurant;
 
-      if (isFullListLoaded) {
-        return false;
-      }
-
-      return true;
+      return !isFullListLoaded;
     },
   }
 );

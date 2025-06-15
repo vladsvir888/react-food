@@ -1,9 +1,37 @@
-import { useOutletContext } from "react-router";
-import type { NormalizedDishType } from "../../types";
+import { useEffect } from "react";
 import Button from "../../components/button/Button";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch } from "../../redux/store";
+import getDishes from "../../redux/entities/dish/get-dishes";
+import {
+  selectDishes,
+  selectRequestStatus,
+} from "../../redux/entities/dish/slice";
+import { RequestStatus } from "../../redux/types";
+import Spinner from "../../components/spinner/Spinner";
+import Error from "../../components/error/Error";
+import useParamId from "../../hooks/useParamId";
 
 const MenuPage = () => {
-  const { dishes } = useOutletContext<{ dishes: NormalizedDishType[] }>();
+  const id = useParamId();
+  const dispatch = useDispatch<AppDispatch>();
+  const dishes = useSelector(selectDishes);
+  const requestStatus = useSelector(selectRequestStatus);
+
+  useEffect(() => {
+    dispatch(getDishes(id));
+  }, [dispatch, id]);
+
+  if (
+    requestStatus === RequestStatus.idle ||
+    requestStatus === RequestStatus.pending
+  ) {
+    return <Spinner />;
+  }
+
+  if (requestStatus === RequestStatus.rejected) {
+    return <Error />;
+  }
 
   return (
     <div className="menu-page">

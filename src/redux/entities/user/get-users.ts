@@ -26,11 +26,7 @@ const getUsers = createAsyncThunk<
       const state = getState();
       const { isFullListLoaded } = state.user;
 
-      if (isFullListLoaded) {
-        return false;
-      }
-
-      return true;
+      return !isFullListLoaded;
     },
   }
 );

@@ -1,4 +1,4 @@
-import { Outlet, useLocation, useParams } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectRequestStatus,
@@ -10,16 +10,13 @@ import Button from "../../components/button/Button";
 import ArrowPrevIcon from "../../components/icons/ArrowPrevIcon";
 import { useEffect } from "react";
 import { getRestaurant } from "../../redux/entities/restaurant/get-restaurant";
-import getDishes from "../../redux/entities/dish/get-dishes";
-import { selectDishes } from "../../redux/entities/dish/slice";
 import { RequestStatus } from "../../redux/types";
 import Spinner from "../../components/spinner/Spinner";
 import Error from "../../components/error/Error";
-import getReviews from "../../redux/entities/review/get-reviews";
-import { selectReviews } from "../../redux/entities/review/slice";
+import useParamId from "../../hooks/useParamId";
 
 const RestaurantPage = () => {
-  const id = useParams().id as string;
+  const id = useParamId();
   const dispatch = useDispatch<AppDispatch>();
   const requestStatus = useSelector(selectRequestStatus);
   const restaurant = useSelector((state: RootState) =>
@@ -29,20 +26,10 @@ const RestaurantPage = () => {
   const isDefaultPage =
     !location.pathname.includes("reviews") &&
     !location.pathname.includes("menu");
-  const dishes = useSelector(selectDishes);
-  const reviews = useSelector(selectReviews);
 
   useEffect(() => {
     dispatch(getRestaurant(id));
-
-    if (isDefaultPage || location.pathname.includes("menu")) {
-      dispatch(getDishes(id));
-    }
-
-    if (location.pathname.includes("reviews")) {
-      dispatch(getReviews(id));
-    }
-  }, [dispatch, id, isDefaultPage, location.pathname]);
+  }, [dispatch, id]);
 
   if (
     requestStatus === RequestStatus.idle ||
@@ -82,7 +69,7 @@ const RestaurantPage = () => {
           Reviews
         </Button>
       </div>
-      <Outlet context={{ dishes, reviews }} />
+      <Outlet />
     </div>
   );
 };
