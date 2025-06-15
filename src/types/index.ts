@@ -1,27 +1,8 @@
-type Menu = {
+export type NormalizedRestaurantType = {
   id: string;
   name: string;
-  price: number;
-  ingredients: string[];
-};
-
-type Review = {
-  id: string;
-  user: string;
-  text: string;
-  rating: number;
-};
-
-export type RestaurantType = {
-  id: string;
-  name: string;
-  menu: Menu[];
-  reviews: Review[];
-};
-
-export type NormilizedRestaurantType = {
-  id: string;
-  name: string;
+  description: string;
+  img: string;
   menu: string[];
   reviews: string[];
 };
@@ -31,7 +12,7 @@ export type NormalizedUserType = {
   name: string;
 };
 
-export type NormilizedReviewType = {
+export type NormalizedReviewType = {
   id: string;
   userId: string;
   text: string;
