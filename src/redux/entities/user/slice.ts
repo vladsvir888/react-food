@@ -1,32 +1,33 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { normalizedUsers } from "../../../assets/normalized-mock";
+import {
+  createEntityAdapter,
+  createSlice,
+  type EntityState,
+} from "@reduxjs/toolkit";
 import type { NormalizedUserType } from "../../../types";
+import { RequestStatus, type RequestStatusType } from "../../types";
+import type { RootState } from "../../store";
+import getUsers from "./get-users";
 
-type UserState = {
-  ids: string[];
-  entities: Record<string, NormalizedUserType>;
+type ExtendedEntityAdapterState = EntityState<NormalizedUserType, string> & {
+  requestStatus: RequestStatusType;
+  isFullListLoaded: boolean;
   user: NormalizedUserType | null;
 };
 
-const initialState: UserState = {
-  ids: normalizedUsers.map(({ id }) => id),
-  entities: normalizedUsers.reduce<Record<string, NormalizedUserType>>(
-    (acc, user) => {
-      acc[user.id] = user;
+const entityAdapter = createEntityAdapter<NormalizedUserType>();
 
-      return acc;
-    },
-    {}
-  ),
+const initialState: ExtendedEntityAdapterState = entityAdapter.getInitialState({
+  requestStatus: RequestStatus.idle,
+  isFullListLoaded: false,
   user: null,
-};
+});
 
 export const userSlice = createSlice({
-  name: "userSlice",
+  name: "user",
   initialState,
   selectors: {
     selectUser: (state) => state.user,
-    selectUserById: (state, id) => state.entities[id],
+    selectRequestStatus: (state) => state.requestStatus,
   },
   reducers: {
     login: (state) => {
@@ -37,7 +38,24 @@ export const userSlice = createSlice({
       state.user = null;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getUsers.pending, (state) => {
+        state.requestStatus = RequestStatus.pending;
+      })
+      .addCase(getUsers.fulfilled, (state, { payload }) => {
+        state.requestStatus = RequestStatus.fulfilled;
+        state.isFullListLoaded = true;
+        entityAdapter.setAll(state, payload);
+      })
+      .addCase(getUsers.rejected, (state) => {
+        state.requestStatus = RequestStatus.rejected;
+      });
+  },
 });
 
-export const { selectUser, selectUserById } = userSlice.selectors;
+export const { selectUser, selectRequestStatus } = userSlice.selectors;
+export const { selectById: selectUserById } = entityAdapter.getSelectors(
+  (state: RootState) => state[userSlice.name]
+);
 export const { login, logout } = userSlice.actions;

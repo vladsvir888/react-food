@@ -1,26 +1,46 @@
-import { createSlice } from "@reduxjs/toolkit";
-import { normalizedReviews } from "../../../assets/normalized-mock";
-import type { NormilizedReviewType } from "../../../types";
+import {
+  createEntityAdapter,
+  createSlice,
+  type EntityState,
+} from "@reduxjs/toolkit";
+import type { NormalizedReviewType } from "../../../types";
+import { RequestStatus, type RequestStatusType } from "../../types";
+import type { RootState } from "../../store";
+import getReviewsByRestaurantId from "./get-reviews";
 
-const initialState = {
-  ids: normalizedReviews.map(({ id }) => id),
-  entities: normalizedReviews.reduce<Record<string, NormilizedReviewType>>(
-    (acc, review) => {
-      acc[review.id] = review;
-
-      return acc;
-    },
-    {}
-  ),
+type ExtendedEntityAdapterState = EntityState<NormalizedReviewType, string> & {
+  requestStatus: RequestStatusType;
 };
 
-export const reviewSlice = createSlice({
-  name: "reviewSlice",
-  initialState,
-  selectors: {
-    selectReviewById: (state, id) => state.entities[id],
-  },
-  reducers: {},
+const entityAdapter = createEntityAdapter<NormalizedReviewType>();
+
+const initialState: ExtendedEntityAdapterState = entityAdapter.getInitialState({
+  requestStatus: RequestStatus.idle,
 });
 
-export const { selectReviewById } = reviewSlice.selectors;
+export const reviewSlice = createSlice({
+  name: "review",
+  initialState,
+  selectors: {
+    selectRequestStatus: (state) => state.requestStatus,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(getReviewsByRestaurantId.pending, (state) => {
+        state.requestStatus = RequestStatus.pending;
+      })
+      .addCase(getReviewsByRestaurantId.fulfilled, (state, { payload }) => {
+        state.requestStatus = RequestStatus.fulfilled;
+        entityAdapter.setAll(state, payload);
+      })
+      .addCase(getReviewsByRestaurantId.rejected, (state) => {
+        state.requestStatus = RequestStatus.rejected;
+      });
+  },
+});
+
+export const { selectAll: selectReviews, selectById: selectReviewById } =
+  entityAdapter.getSelectors((state: RootState) => state[reviewSlice.name]);
+
+export const { selectRequestStatus } = reviewSlice.selectors;

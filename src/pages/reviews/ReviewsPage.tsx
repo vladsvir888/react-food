@@ -1,29 +1,48 @@
-import { useSelector } from "react-redux";
-import { useParams } from "react-router";
-import type { RootState } from "../../redux/store";
-import { selectRestaurantById } from "../../redux/entities/restaurant/slice";
-import RestaurantReviewItem from "../../components/restaurant/RestaurantReviewItem";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUser } from "../../redux/entities/user/slice";
-import ReviewForm from "../../components/reviewform/ReviewForm";
 import styles from "./reviewspage.module.css";
+import RestaurantReviewItem from "../../components/restaurant/RestaurantReviewItem";
+import ReviewForm from "../../components/reviewform/ReviewForm";
+import type { AppDispatch } from "../../redux/store";
+import {
+  selectRequestStatus,
+  selectReviews,
+} from "../../redux/entities/review/slice";
+import { useEffect } from "react";
+import getReviewsByRestaurantId from "../../redux/entities/review/get-reviews";
+import { RequestStatus } from "../../redux/types";
+import Spinner from "../../components/spinner/Spinner";
+import Error from "../../components/error/Error";
+import useParamId from "../../hooks/useParamId";
 
 const ReviewsPage = () => {
   const user = useSelector(selectUser);
-  const { id } = useParams();
-  const restaurant = useSelector((state: RootState) =>
-    selectRestaurantById(state, id)
-  );
+  const id = useParamId();
+  const dispatch = useDispatch<AppDispatch>();
+  const reviews = useSelector(selectReviews);
+  const requestStatus = useSelector(selectRequestStatus);
 
-  if (!restaurant.reviews.length) {
-    return <h2>No reviews</h2>;
+  useEffect(() => {
+    dispatch(getReviewsByRestaurantId(id));
+  }, [dispatch, id]);
+
+  if (
+    requestStatus === RequestStatus.idle ||
+    requestStatus === RequestStatus.pending
+  ) {
+    return <Spinner />;
+  }
+
+  if (requestStatus === RequestStatus.rejected) {
+    return <Error />;
   }
 
   return (
     <div className={styles.reviewsPage}>
       <h2>Reviews:</h2>
       <ul>
-        {restaurant.reviews.map((review) => (
-          <RestaurantReviewItem key={review} id={review} />
+        {reviews.map((review) => (
+          <RestaurantReviewItem key={review.id} id={review.id} />
         ))}
       </ul>
       {user && <ReviewForm />}
