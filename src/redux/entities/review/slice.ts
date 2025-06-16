@@ -6,7 +6,7 @@ import {
 import type { NormalizedReviewType } from "../../../types";
 import { RequestStatus, type RequestStatusType } from "../../types";
 import type { RootState } from "../../store";
-import getReviews from "./get-reviews";
+import getReviewsByRestaurantId from "./get-reviews";
 
 type ExtendedEntityAdapterState = EntityState<NormalizedReviewType, string> & {
   requestStatus: RequestStatusType;
@@ -27,14 +27,14 @@ export const reviewSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getReviews.pending, (state) => {
+      .addCase(getReviewsByRestaurantId.pending, (state) => {
         state.requestStatus = RequestStatus.pending;
       })
-      .addCase(getReviews.fulfilled, (state, { payload }) => {
+      .addCase(getReviewsByRestaurantId.fulfilled, (state, { payload }) => {
         state.requestStatus = RequestStatus.fulfilled;
         entityAdapter.setAll(state, payload);
       })
-      .addCase(getReviews.rejected, (state) => {
+      .addCase(getReviewsByRestaurantId.rejected, (state) => {
         state.requestStatus = RequestStatus.rejected;
       });
   },

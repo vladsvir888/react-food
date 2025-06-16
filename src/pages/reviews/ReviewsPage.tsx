@@ -9,7 +9,7 @@ import {
   selectReviews,
 } from "../../redux/entities/review/slice";
 import { useEffect } from "react";
-import getReviews from "../../redux/entities/review/get-reviews";
+import getReviewsByRestaurantId from "../../redux/entities/review/get-reviews";
 import { RequestStatus } from "../../redux/types";
 import Spinner from "../../components/spinner/Spinner";
 import Error from "../../components/error/Error";
@@ -23,7 +23,7 @@ const ReviewsPage = () => {
   const requestStatus = useSelector(selectRequestStatus);
 
   useEffect(() => {
-    dispatch(getReviews(id));
+    dispatch(getReviewsByRestaurantId(id));
   }, [dispatch, id]);
 
   if (
