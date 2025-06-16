@@ -34,7 +34,7 @@ export const dishSlice = createSlice({
       })
       .addCase(getDishes.fulfilled, (state, { payload }) => {
         state.requestStatus = RequestStatus.fulfilled;
-        entityAdapter.setAll(state, payload);
+        entityAdapter.setMany(state, payload);
       })
       .addCase(getDishes.rejected, (state) => {
         state.requestStatus = RequestStatus.rejected;

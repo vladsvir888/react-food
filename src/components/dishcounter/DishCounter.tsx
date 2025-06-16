@@ -14,19 +14,19 @@ type Props = {
 };
 
 const DishCounter = ({ dish }: Props) => {
-  const { id, name } = dish;
+  const { id } = dish;
 
   const cartItem = useSelector((state: RootState) => selectCartItem(state, id));
   const initialQuantityCartItem = cartItem?.quantity || 0;
   const dispatch = useDispatch();
   const onIncrement = () => {
-    dispatch(addToCart({ id, name }));
+    dispatch(addToCart({ id }));
   };
   const onDecrement = () => {
-    dispatch(removeFromCart({ id, name }));
+    dispatch(removeFromCart({ id }));
   };
   const onChange = (value: number) => {
-    dispatch(updateCartItem({ id, name, quantity: value }));
+    dispatch(updateCartItem({ id, quantity: value }));
   };
 
   return (

@@ -69,7 +69,7 @@ const RestaurantPage = () => {
           Reviews
         </Button>
       </div>
-      <Outlet />
+      <Outlet context={{ menu: restaurant.menu }} />
     </div>
   );
 };

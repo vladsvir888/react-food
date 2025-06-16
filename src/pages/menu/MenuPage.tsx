@@ -11,11 +11,14 @@ import { RequestStatus } from "../../redux/types";
 import Spinner from "../../components/spinner/Spinner";
 import Error from "../../components/error/Error";
 import useParamId from "../../hooks/useParamId";
+import { useOutletContext } from "react-router";
 
 const MenuPage = () => {
   const id = useParamId();
+  const { menu } = useOutletContext<{ menu: string[] }>();
   const dispatch = useDispatch<AppDispatch>();
   const dishes = useSelector(selectDishes);
+  const filteredDishes = dishes.filter((dish) => menu.includes(dish.id));
   const requestStatus = useSelector(selectRequestStatus);
 
   useEffect(() => {
@@ -37,7 +40,7 @@ const MenuPage = () => {
     <div className="menu-page">
       <h2>Menu:</h2>
       <ul>
-        {dishes.map((dish) => (
+        {filteredDishes.map((dish) => (
           <li key={dish.id}>
             <Button variant="link" to={`/dish/${dish.id}`}>
               {dish.name}
