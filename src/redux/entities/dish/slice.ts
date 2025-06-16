@@ -6,7 +6,7 @@ import {
 import type { NormalizedDishType } from "../../../types";
 import { RequestStatus, type RequestStatusType } from "../../types";
 import type { RootState } from "../../store";
-import getDishes from "./get-dishes";
+import getDishesByRestaurantId from "./get-dishes";
 import { getDish } from "./get-dish";
 
 type ExtendedEntityAdapterState = EntityState<NormalizedDishType, string> & {
@@ -29,14 +29,14 @@ export const dishSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // === dishes
-      .addCase(getDishes.pending, (state) => {
+      .addCase(getDishesByRestaurantId.pending, (state) => {
         state.requestStatus = RequestStatus.pending;
       })
-      .addCase(getDishes.fulfilled, (state, { payload }) => {
+      .addCase(getDishesByRestaurantId.fulfilled, (state, { payload }) => {
         state.requestStatus = RequestStatus.fulfilled;
         entityAdapter.setMany(state, payload);
       })
-      .addCase(getDishes.rejected, (state) => {
+      .addCase(getDishesByRestaurantId.rejected, (state) => {
         state.requestStatus = RequestStatus.rejected;
       })
       // === dish

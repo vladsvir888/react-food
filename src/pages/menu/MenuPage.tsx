@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import Button from "../../components/button/Button";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch } from "../../redux/store";
-import getDishes from "../../redux/entities/dish/get-dishes";
+import getDishesByRestaurantId from "../../redux/entities/dish/get-dishes";
 import {
   selectDishes,
   selectRequestStatus,
@@ -22,7 +22,7 @@ const MenuPage = () => {
   const requestStatus = useSelector(selectRequestStatus);
 
   useEffect(() => {
-    dispatch(getDishes(id));
+    dispatch(getDishesByRestaurantId(id));
   }, [dispatch, id]);
 
   if (

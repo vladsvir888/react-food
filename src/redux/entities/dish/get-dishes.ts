@@ -2,8 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { sendRequest } from "../../../utils/send-request";
 import type { NormalizedDishType } from "../../../types";
 
-const getDishes = createAsyncThunk<NormalizedDishType[], string>(
-  "dish/getDishes",
+const getDishesByRestaurantId = createAsyncThunk<NormalizedDishType[], string>(
+  "dish/getDishesByRestaurantId",
   async (id, { rejectWithValue }) => {
     try {
       const data = await sendRequest({
@@ -19,4 +19,4 @@ const getDishes = createAsyncThunk<NormalizedDishType[], string>(
   }
 );
 
-export default getDishes;
+export default getDishesByRestaurantId;
