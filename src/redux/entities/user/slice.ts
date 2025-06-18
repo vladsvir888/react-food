@@ -30,9 +30,8 @@ export const userSlice = createSlice({
     selectRequestStatus: (state) => state.requestStatus,
   },
   reducers: {
-    login: (state) => {
-      const id = Object.keys(state.entities)[0]; // fake
-      state.user = state.entities[id];
+    login: (state, { payload }) => {
+      state.user = payload;
     },
     logout: (state) => {
       state.user = null;

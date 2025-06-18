@@ -1,17 +1,13 @@
-import { useSelector } from "react-redux";
-import type { RootState } from "../../redux/store";
-import { selectReviewById } from "../../redux/entities/review/slice";
-import { selectUserById } from "../../redux/entities/user/slice";
+import type { NormalizedReviewType } from "../../types";
+import { useGetUsersQuery } from "../../redux/api";
 
 type Props = {
-  id: string;
+  review: NormalizedReviewType;
 };
 
-const RestaurantReviewItem = ({ id }: Props) => {
-  const review = useSelector((state: RootState) => selectReviewById(state, id));
-  const user = useSelector((state: RootState) =>
-    selectUserById(state, review.userId)
-  );
+const RestaurantReviewItem = ({ review }: Props) => {
+  const { data: users } = useGetUsersQuery();
+  const user = users?.find((user) => user.id === review.userId);
 
   return (
     <li>
