@@ -8,7 +8,6 @@ const SET_RATING_ACTION = "setRating";
 const SET_RESET_ACTION = "setReset";
 
 type State = {
-  name: string;
   text: string;
   rating: number;
 };
@@ -19,7 +18,6 @@ type Actions =
   | { type: typeof SET_RESET_ACTION };
 
 const initialState: State = {
-  name: "",
   text: "",
   rating: 0,
 };
@@ -77,8 +75,7 @@ const useReviewForm = ({ restaurantId }: { restaurantId: string }) => {
         rating: state.rating,
         restaurantId,
       });
-      state.text = "";
-      state.rating = 0;
+      handleReset();
     } catch (error) {
       console.log(error);
     }

@@ -54,7 +54,7 @@ const RestaurantPage = () => {
           Reviews
         </Button>
       </div>
-      <Outlet context={{ menu: restaurant.menu }} />
+      <Outlet />
     </div>
   );
 };

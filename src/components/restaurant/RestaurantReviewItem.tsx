@@ -6,8 +6,11 @@ type Props = {
 };
 
 const RestaurantReviewItem = ({ review }: Props) => {
-  const { data: users } = useGetUsersQuery();
-  const user = users?.find((user) => user.id === review.userId);
+  const { user } = useGetUsersQuery(undefined, {
+    selectFromResult: (result) => ({
+      user: result?.data?.find(({ id }) => id === review.userId),
+    }),
+  });
 
   return (
     <li>

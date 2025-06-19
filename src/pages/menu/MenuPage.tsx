@@ -2,7 +2,6 @@ import Button from "../../components/button/Button";
 import Spinner from "../../components/spinner/Spinner";
 import Error from "../../components/error/Error";
 import useParamId from "../../hooks/useParamId";
-import { useOutletContext } from "react-router";
 import { useGetDishesByRestaurantIdQuery } from "../../redux/api";
 
 const MenuPage = () => {
@@ -12,8 +11,6 @@ const MenuPage = () => {
     error,
     isLoading,
   } = useGetDishesByRestaurantIdQuery(id);
-  const { menu } = useOutletContext<{ menu: string[] }>();
-  const filteredDishes = dishes?.filter((dish) => menu.includes(dish.id));
 
   if (isLoading) {
     return <Spinner />;
@@ -23,7 +20,7 @@ const MenuPage = () => {
     return <Error />;
   }
 
-  if (!filteredDishes?.length) {
+  if (!dishes?.length) {
     return null;
   }
 
@@ -31,7 +28,7 @@ const MenuPage = () => {
     <div className="menu-page">
       <h2>Menu:</h2>
       <ul>
-        {filteredDishes.map((dish) => (
+        {dishes.map((dish) => (
           <li key={dish.id}>
             <Button variant="link" to={`/dish/${dish.id}`}>
               {dish.name}
