@@ -1,40 +1,32 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/entities/user/slice";
 import styles from "./reviewspage.module.css";
 import RestaurantReviewItem from "../../components/restaurant/RestaurantReviewItem";
 import ReviewForm from "../../components/reviewform/ReviewForm";
-import type { AppDispatch } from "../../redux/store";
-import {
-  selectRequestStatus,
-  selectReviews,
-} from "../../redux/entities/review/slice";
-import { useEffect } from "react";
-import getReviewsByRestaurantId from "../../redux/entities/review/get-reviews";
-import { RequestStatus } from "../../redux/types";
 import Spinner from "../../components/spinner/Spinner";
 import Error from "../../components/error/Error";
 import useParamId from "../../hooks/useParamId";
+import { useGetReviewsByRestaurantIdQuery } from "../../redux/api";
 
 const ReviewsPage = () => {
   const user = useSelector(selectUser);
   const id = useParamId();
-  const dispatch = useDispatch<AppDispatch>();
-  const reviews = useSelector(selectReviews);
-  const requestStatus = useSelector(selectRequestStatus);
+  const {
+    data: reviews,
+    error,
+    isLoading,
+  } = useGetReviewsByRestaurantIdQuery(id);
 
-  useEffect(() => {
-    dispatch(getReviewsByRestaurantId(id));
-  }, [dispatch, id]);
-
-  if (
-    requestStatus === RequestStatus.idle ||
-    requestStatus === RequestStatus.pending
-  ) {
+  if (isLoading) {
     return <Spinner />;
   }
 
-  if (requestStatus === RequestStatus.rejected) {
+  if (error) {
     return <Error />;
+  }
+
+  if (!reviews?.length) {
+    return null;
   }
 
   return (
@@ -42,10 +34,10 @@ const ReviewsPage = () => {
       <h2>Reviews:</h2>
       <ul>
         {reviews.map((review) => (
-          <RestaurantReviewItem key={review.id} id={review.id} />
+          <RestaurantReviewItem key={review.id} review={review} />
         ))}
       </ul>
-      {user && <ReviewForm />}
+      {user && <ReviewForm restaurantId={id} />}
     </div>
   );
 };

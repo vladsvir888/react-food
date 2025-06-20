@@ -19,12 +19,14 @@ type Props = {
   value: string | number;
   classNameWrap?: string;
   className?: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const Input = ({
   type = "text",
   placeholder,
+  disabled,
   value,
   classNameWrap,
   className,
@@ -36,6 +38,7 @@ const Input = ({
         className={classNames(styles.input, className)}
         type={type}
         placeholder={placeholder}
+        disabled={disabled}
         value={value}
         onChange={onChange}
       />

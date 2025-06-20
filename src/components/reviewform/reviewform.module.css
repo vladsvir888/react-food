@@ -4,3 +4,8 @@
   align-items: flex-start;
   row-gap: 10px;
 }
+
+.buttons {
+  display: flex;
+  column-gap: 5px;
+}

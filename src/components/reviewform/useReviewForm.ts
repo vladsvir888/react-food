@@ -1,31 +1,29 @@
 import { useReducer } from "react";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../redux/entities/user/slice";
+import { usePostReviewByRestaurantIdMutation } from "../../redux/api";
 
-const SET_NAME_ACTION = "setName";
 const SET_TEXT_ACTION = "setText";
 const SET_RATING_ACTION = "setRating";
 const SET_RESET_ACTION = "setReset";
 
 type State = {
-  name: string;
   text: string;
   rating: number;
 };
 
 type Actions =
-  | { type: typeof SET_NAME_ACTION; value: State["name"] }
   | { type: typeof SET_TEXT_ACTION; value: State["text"] }
   | { type: typeof SET_RATING_ACTION; value: State["rating"] }
   | { type: typeof SET_RESET_ACTION };
 
 const initialState: State = {
-  name: "",
   text: "",
   rating: 0,
 };
 
 const stateReducer = (state: State, action: Actions): State => {
   switch (action.type) {
-    case SET_NAME_ACTION:
     case SET_TEXT_ACTION:
     case SET_RATING_ACTION: {
       const type = action.type.replace("set", "").toLowerCase();
@@ -38,15 +36,17 @@ const stateReducer = (state: State, action: Actions): State => {
   }
 };
 
-const useReviewForm = () => {
+const useReviewForm = ({ restaurantId }: { restaurantId: string }) => {
   const [state, dispatch] = useReducer(stateReducer, initialState);
 
-  const isDisabledButton =
-    JSON.stringify(state) === JSON.stringify(initialState);
+  const user = useSelector(selectUser);
 
-  const handleNameChange = (value: string) => {
-    dispatch({ type: SET_NAME_ACTION, value });
-  };
+  const [postReview, { isLoading }] = usePostReviewByRestaurantIdMutation();
+
+  const areFieldsValid = !!(state.text && state.rating);
+  const isDisabledResetButton =
+    JSON.stringify(state) === JSON.stringify(initialState);
+  const isDisabledSubmitButton = !areFieldsValid || isLoading;
 
   const handleTextChange = (value: string) => {
     dispatch({ type: SET_TEXT_ACTION, value });
@@ -61,13 +61,35 @@ const useReviewForm = () => {
 
   const handleReset = () => dispatch({ type: SET_RESET_ACTION });
 
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!user) {
+      return;
+    }
+
+    try {
+      await postReview({
+        userId: user.id,
+        text: state.text,
+        rating: state.rating,
+        restaurantId,
+      });
+      handleReset();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return {
     state,
-    isDisabledButton,
-    handleNameChange,
+    isDisabledResetButton,
+    isDisabledSubmitButton,
+    isLoading,
     handleTextChange,
     handleRatingChange,
     handleReset,
+    handleSubmit,
   };
 };
 
