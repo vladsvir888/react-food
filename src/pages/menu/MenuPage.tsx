@@ -1,3 +1,5 @@
+"use client";
+
 import Button from "../../components/button/Button";
 import Spinner from "../../components/spinner/Spinner";
 import Error from "../../components/error/Error";

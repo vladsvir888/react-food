@@ -1,13 +1,13 @@
-import { useParams } from "react-router";
+import { useParams } from "next/navigation";
 
 const useParamId = () => {
-  const { id } = useParams<{ id?: string }>();
+  const params = useParams<{ id?: string }>();
 
-  if (!id) {
+  if (!params?.id) {
     throw new Error("Id parameter is missing");
   }
 
-  return id;
+  return params.id;
 };
 
 export default useParamId;

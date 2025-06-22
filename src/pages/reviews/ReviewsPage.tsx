@@ -1,3 +1,5 @@
+"use client";
+
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/entities/user/slice";
 import styles from "./reviewspage.module.css";

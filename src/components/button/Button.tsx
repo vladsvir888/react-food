@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import styles from "./button.module.css";
-import { NavLink } from "react-router";
+import Link from "next/link";
 
 type Props = {
   children?: React.ReactNode;
@@ -40,10 +40,10 @@ const Button = ({
 
   if (to) {
     return (
-      <NavLink to={to} className={classes}>
+      <Link href={to} className={classes}>
         {icon}
         {children && <span>{children}</span>}
-      </NavLink>
+      </Link>
     );
   }
 

@@ -1,3 +1,5 @@
+"use client";
+
 import styles from "./restaurantspage.module.css";
 import RestaurantLink from "../../components/restaurant/RestaurantLink";
 import Spinner from "../../components/spinner/Spinner";
