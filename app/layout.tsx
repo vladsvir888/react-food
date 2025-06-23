@@ -27,7 +27,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <div id="root" className="root">
+        <div className="root">
           <App>{children}</App>
         </div>
       </body>

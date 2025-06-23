@@ -1,1 +1,1 @@
-export { default } from "@/pages/menu/MenuPage";
+export { default } from "@/views/menu/MenuPage";
