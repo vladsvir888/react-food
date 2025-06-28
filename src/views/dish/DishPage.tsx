@@ -1,3 +1,5 @@
+"use client";
+
 import DishCard from "../../components/dishcard/DishCard";
 import Spinner from "../../components/spinner/Spinner";
 import Error from "../../components/error/Error";

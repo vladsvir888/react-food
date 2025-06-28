@@ -1,4 +1,5 @@
-import { Outlet, useLocation } from "react-router";
+"use client";
+
 import styles from "./restaurantpage.module.css";
 import Button from "../../components/button/Button";
 import ArrowPrevIcon from "../../components/icons/ArrowPrevIcon";
@@ -7,12 +8,12 @@ import Error from "../../components/error/Error";
 import useParamId from "../../hooks/useParamId";
 import { useGetRestaurantQuery } from "../../redux/api";
 
-const RestaurantPage = () => {
+type Props = {
+  children: React.ReactNode;
+};
+
+const RestaurantPage = ({ children }: Props) => {
   const id = useParamId();
-  const location = useLocation();
-  const isDefaultPage =
-    !location.pathname.includes("reviews") &&
-    !location.pathname.includes("menu");
   const { data: restaurant, error, isLoading } = useGetRestaurantQuery(id);
 
   if (isLoading) {
@@ -43,18 +44,14 @@ const RestaurantPage = () => {
         height={200}
       />
       <div className={styles.links}>
-        <Button
-          to="menu"
-          variant="link"
-          className={isDefaultPage ? styles.defaultLink : undefined}
-        >
+        <Button to={`/restaurants/${id}/menu`} variant="link">
           Menu
         </Button>
-        <Button to="reviews" variant="link">
+        <Button to={`/restaurants/${id}/reviews`} variant="link">
           Reviews
         </Button>
       </div>
-      <Outlet />
+      {children}
     </div>
   );
 };
