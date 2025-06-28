@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "@/main.css";
-import App from "@/App";
+import BaseLayout from "@/layouts/Base";
 
 export const metadata: Metadata = {
   title: "Restaurants",
@@ -28,7 +28,7 @@ export default function RootLayout({
       </head>
       <body>
         <div className="root">
-          <App>{children}</App>
+          <BaseLayout>{children}</BaseLayout>
         </div>
       </body>
     </html>
