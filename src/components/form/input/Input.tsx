@@ -11,15 +11,18 @@ type InputTypes =
   | "tel"
   | "text"
   | "time"
-  | "url";
+  | "url"
+  | "hidden";
 
 type Props = {
   type?: InputTypes;
-  placeholder: string;
-  value: string | number;
+  placeholder?: string;
+  value?: string | number;
   classNameWrap?: string;
   className?: string;
   disabled?: boolean;
+  name?: string;
+  required?: boolean;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
@@ -30,6 +33,8 @@ const Input = ({
   value,
   classNameWrap,
   className,
+  name,
+  required,
   onChange,
 }: Props) => {
   return (
@@ -39,6 +44,8 @@ const Input = ({
         type={type}
         placeholder={placeholder}
         disabled={disabled}
+        name={name}
+        required={required}
         value={value}
         onChange={onChange}
       />

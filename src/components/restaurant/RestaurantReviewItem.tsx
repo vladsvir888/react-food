@@ -1,3 +1,5 @@
+"use client";
+
 import type { NormalizedReviewType } from "../../types";
 import { useGetUsersQuery } from "../../redux/api";
 

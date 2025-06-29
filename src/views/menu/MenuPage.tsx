@@ -1,29 +1,17 @@
-"use client";
-
 import Button from "../../components/button/Button";
-import Spinner from "../../components/spinner/Spinner";
-import Error from "../../components/error/Error";
-import useParamId from "../../hooks/useParamId";
-import { useGetDishesByRestaurantIdQuery } from "../../redux/api";
+import { sendRequest } from "@/utils/send-request";
+import { NormalizedDishType } from "@/types";
+import { notFound } from "next/navigation";
 
-const MenuPage = () => {
-  const id = useParamId();
-  const {
-    data: dishes,
-    error,
-    isLoading,
-  } = useGetDishesByRestaurantIdQuery(id);
+const MenuPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
+  const dishes = await sendRequest<NormalizedDishType[]>({
+    url: "/dishes",
+    queryParams: { restaurantId: id },
+  });
 
-  if (isLoading) {
-    return <Spinner />;
-  }
-
-  if (error) {
-    return <Error />;
-  }
-
-  if (!dishes?.length) {
-    return null;
+  if (!dishes) {
+    notFound();
   }
 
   return (

@@ -1,54 +1,32 @@
-import Button from "../button/Button";
+"use client";
+
 import Input from "../form/input/Input";
 import Rating from "../form/rating/Rating";
-import useReviewForm from "./useReviewForm";
 import styles from "./reviewform.module.css";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../redux/entities/user/slice";
+import { createReview } from "@/actions/create-review";
+import ReviewFormSubmitButton from "./ReviewFormSubmitButton";
 
 type Props = {
   restaurantId: string;
 };
 
 const ReviewForm = ({ restaurantId }: Props) => {
-  const {
-    state: { text, rating },
-    isDisabledResetButton,
-    isDisabledSubmitButton,
-    isLoading,
-    handleTextChange,
-    handleRatingChange,
-    handleReset,
-    handleSubmit,
-  } = useReviewForm({ restaurantId });
-
   const user = useSelector(selectUser);
 
+  if (!user) {
+    return null;
+  }
+
   return (
-    <form className={styles.reviewForm} onSubmit={handleSubmit}>
-      {user && <Input placeholder="Name" value={user.name} disabled />}
-      <Input
-        placeholder="Text"
-        value={text}
-        onChange={(event) => handleTextChange(event.target.value)}
-      />
-      <Rating
-        name="review"
-        value={rating}
-        onChange={(event) => handleRatingChange(event.target.value)}
-      />
-      <div className={styles.buttons}>
-        <Button type="submit" disabled={isDisabledSubmitButton}>
-          {isLoading ? "Submitting..." : "Submit"}
-        </Button>
-        <Button
-          type="reset"
-          disabled={isDisabledResetButton}
-          onClick={handleReset}
-        >
-          Reset
-        </Button>
-      </div>
+    <form className={styles.reviewForm} action={createReview}>
+      <Input type="hidden" name="user-id" value={user.id} />
+      <Input type="hidden" name="restaurant-id" value={restaurantId} />
+      <Input value={user.name} disabled />
+      <Input placeholder="Text" name="text" required />
+      <Rating name="rating" required />
+      <ReviewFormSubmitButton />
     </form>
   );
 };

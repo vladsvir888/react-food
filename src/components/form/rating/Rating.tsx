@@ -1,12 +1,13 @@
 type Props = {
-  name: string;
-  value: number;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  name?: string;
+  value?: number;
+  required?: boolean;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const items = [1, 2, 3, 4, 5];
 
-const Rating = ({ name, value, onChange }: Props) => {
+const Rating = ({ name, value, onChange, required }: Props) => {
   return (
     <div className="rating">
       {items.map((item) => (
@@ -15,7 +16,8 @@ const Rating = ({ name, value, onChange }: Props) => {
             type="radio"
             value={item}
             name={name}
-            checked={value === item}
+            required={required}
+            defaultChecked={value === item}
             onChange={onChange}
           />
           <span>{item} stars</span>

@@ -1,20 +1,20 @@
-"use client";
-
-import { Provider as ReduxProvider } from "react-redux";
-import { store } from "../redux/store";
+import ReduxProvider from "@/redux/ReduxProvider";
 import Cart from "../components/cart/Cart";
 import Footer from "../components/footer/Footer";
 import Header from "../components/header/Header";
 import Progressbar from "../components/progressbar/Progressbar";
 import ThemeProvider from "../components/theme/ThemeProvider";
+import { sendRequest } from "@/utils/send-request";
 
 type Props = {
   children: React.ReactNode;
 };
 
-const BaseLayout = ({ children }: Props) => {
+const BaseLayout = async ({ children }: Props) => {
+  await sendRequest({ url: "/users" });
+
   return (
-    <ReduxProvider store={store}>
+    <ReduxProvider>
       <ThemeProvider>
         <Progressbar />
         <Header />
