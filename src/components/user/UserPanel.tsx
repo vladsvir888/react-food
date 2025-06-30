@@ -1,3 +1,5 @@
+"use client";
+
 import { useSelector } from "react-redux";
 import UserButton from "./UserButton";
 import UsernameDisplay from "./UsernameDisplay";

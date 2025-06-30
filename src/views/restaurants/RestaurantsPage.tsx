@@ -1,24 +1,16 @@
-"use client";
-
 import styles from "./restaurantspage.module.css";
 import RestaurantLink from "../../components/restaurant/RestaurantLink";
-import Spinner from "../../components/spinner/Spinner";
-import Error from "../../components/error/Error";
-import { useGetRestaurantsQuery } from "../../redux/api";
+import { sendRequest } from "@/utils/send-request";
+import { NormalizedRestaurantType } from "@/types";
+import { notFound } from "next/navigation";
 
-const RestaurantsPage = () => {
-  const { data: restaurants, error, isLoading } = useGetRestaurantsQuery();
+const RestaurantsPage = async () => {
+  const restaurants = await sendRequest<NormalizedRestaurantType[]>({
+    url: "/restaurants",
+  });
 
-  if (isLoading) {
-    return <Spinner />;
-  }
-
-  if (error) {
-    return <Error />;
-  }
-
-  if (!restaurants?.length) {
-    return null;
+  if (!restaurants) {
+    notFound();
   }
 
   return (

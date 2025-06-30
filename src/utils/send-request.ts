@@ -6,6 +6,7 @@ type Args = {
   body?: unknown;
   headers?: HeadersInit;
   queryParams?: QueryParamsObject;
+  next?: NextFetchRequestConfig;
 };
 
 const API_URL = "http://localhost:3001";
@@ -16,7 +17,7 @@ const prepareQueryParams = (paramsObject: QueryParamsObject) => {
   return queryString;
 };
 
-export const sendRequest = async ({
+export const sendRequest = async <T>({
   url,
   method = "GET",
   body,
@@ -39,11 +40,16 @@ export const sendRequest = async ({
     preparedUrl = `${preparedUrl}?${prepareQueryParams(queryParams)}`;
   }
 
-  const response = await fetch(preparedUrl, options);
+  try {
+    const response = await fetch(preparedUrl, options);
 
-  if (!response.ok) {
-    throw new Error(`Error: ${response.statusText}`);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+
+    return (await response.json()) as T;
+  } catch (error) {
+    console.log(error, "error");
+    return null;
   }
-
-  return await response.json();
 };

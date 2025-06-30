@@ -1,31 +1,23 @@
-"use client";
-
 import styles from "./restaurantpage.module.css";
 import Button from "../../components/button/Button";
 import ArrowPrevIcon from "../../components/icons/ArrowPrevIcon";
-import Spinner from "../../components/spinner/Spinner";
-import Error from "../../components/error/Error";
-import useParamId from "../../hooks/useParamId";
-import { useGetRestaurantQuery } from "../../redux/api";
+import { sendRequest } from "@/utils/send-request";
+import { NormalizedRestaurantType } from "@/types";
+import { notFound } from "next/navigation";
 
 type Props = {
   children: React.ReactNode;
+  params: Promise<{ id: string }>;
 };
 
-const RestaurantPage = ({ children }: Props) => {
-  const id = useParamId();
-  const { data: restaurant, error, isLoading } = useGetRestaurantQuery(id);
-
-  if (isLoading) {
-    return <Spinner />;
-  }
-
-  if (error) {
-    return <Error />;
-  }
+const RestaurantPage = async ({ children, params }: Props) => {
+  const { id } = await params;
+  const restaurant = await sendRequest<NormalizedRestaurantType>({
+    url: `/restaurant/${id}`,
+  });
 
   if (!restaurant) {
-    return null;
+    notFound();
   }
 
   return (

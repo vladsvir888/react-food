@@ -1,3 +1,5 @@
+"use client";
+
 import Button from "../button/Button";
 import { useThemeContext } from "./ThemeContext";
 import SunIcon from "./icons/SunIcon";

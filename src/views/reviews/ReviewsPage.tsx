@@ -1,34 +1,19 @@
-"use client";
-
-import { useSelector } from "react-redux";
-import { selectUser } from "../../redux/entities/user/slice";
 import styles from "./reviewspage.module.css";
 import RestaurantReviewItem from "../../components/restaurant/RestaurantReviewItem";
 import ReviewForm from "../../components/reviewform/ReviewForm";
-import Spinner from "../../components/spinner/Spinner";
-import Error from "../../components/error/Error";
-import useParamId from "../../hooks/useParamId";
-import { useGetReviewsByRestaurantIdQuery } from "../../redux/api";
+import { sendRequest } from "@/utils/send-request";
+import { NormalizedReviewType } from "@/types";
+import { notFound } from "next/navigation";
 
-const ReviewsPage = () => {
-  const user = useSelector(selectUser);
-  const id = useParamId();
-  const {
-    data: reviews,
-    error,
-    isLoading,
-  } = useGetReviewsByRestaurantIdQuery(id);
+const ReviewsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
+  const reviews = await sendRequest<NormalizedReviewType[]>({
+    url: "/reviews",
+    queryParams: { restaurantId: id },
+  });
 
-  if (isLoading) {
-    return <Spinner />;
-  }
-
-  if (error) {
-    return <Error />;
-  }
-
-  if (!reviews?.length) {
-    return null;
+  if (!reviews) {
+    notFound();
   }
 
   return (
@@ -39,7 +24,7 @@ const ReviewsPage = () => {
           <RestaurantReviewItem key={review.id} review={review} />
         ))}
       </ul>
-      {user && <ReviewForm restaurantId={id} />}
+      <ReviewForm restaurantId={id} />
     </div>
   );
 };

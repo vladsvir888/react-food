@@ -1,25 +1,14 @@
-"use client";
-
 import DishCard from "../../components/dishcard/DishCard";
-import Spinner from "../../components/spinner/Spinner";
-import Error from "../../components/error/Error";
-import useParamId from "../../hooks/useParamId";
-import { useGetDishQuery } from "../../redux/api";
+import { sendRequest } from "@/utils/send-request";
+import { NormalizedDishType } from "@/types";
+import { notFound } from "next/navigation";
 
-const DishPage = () => {
-  const id = useParamId();
-  const { data: dish, error, isLoading } = useGetDishQuery(id);
-
-  if (isLoading) {
-    return <Spinner />;
-  }
-
-  if (error) {
-    return <Error />;
-  }
+const DishPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
+  const dish = await sendRequest<NormalizedDishType>({ url: `/dish/${id}` });
 
   if (!dish) {
-    return null;
+    notFound();
   }
 
   return (
